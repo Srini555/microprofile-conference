@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: conference-app
+spec:
+  selector:
+    matchLabels:
+      app: conference-app
+  replicas: 1 # deployment runs 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: conference-app
+    spec:
+      containers:
+      - name: conference-app
+        image: rcandidosilva/microprofile-conference:latest
+        imagePullPolicy: Always
+        ports:
+        - name: conference-app
+          containerPort: 8081 #Endpoint is at port 8080 in the container
+          protocol: TCP
+      imagePullSecrets:
+      - name: wercker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conference-svc
+  labels:
+    app: conference-app
+spec:
+  type: NodePort #Exposes the service as a node port
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: conference-app
+---
