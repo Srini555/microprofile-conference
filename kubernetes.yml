@@ -1,24 +1,24 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: conference-app
+  name: conference
 spec:
   selector:
     matchLabels:
-      app: conference-app
+      app: conference
   replicas: 1 # deployment runs 1 pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: conference-app
+        app: conference
     spec:
       containers:
-      - name: conference-app
-        image: iad.ocir.io/rodrigocandidosilva/microprofile-conference
+      - name: conference
+        image: iad.ocir.io/rodrigocandidosilva/conference
         imagePullPolicy: Always
         ports:
-        - name: conference-app
-          containerPort: 8081 #Endpoint is at port 8080 in the container
+        - name: conference
+          containerPort: 8081 #Endpoint is at port 8081 in the container
           protocol: TCP
       imagePullSecrets:
       - name: wercker
@@ -26,9 +26,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: conference-svc
+  name: conference
   labels:
-    app: conference-app
+    app: conference
 spec:
   type: LoadBalancer #Exposes the service
   ports:
@@ -36,5 +36,5 @@ spec:
     protocol: TCP
     targetPort: 8081
   selector:
-    app: conference-app
+    app: conference
 ---

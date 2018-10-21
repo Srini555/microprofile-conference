@@ -12,11 +12,11 @@ import java.net.URI;
 public class SpeakerClient {
 
     @Inject
-    @ConfigProperty(name = "SPEAKER_SVC_SERVICE_HOST", defaultValue = "localhost")
+    @ConfigProperty(name = "SPEAKER_SERVICE_HOST", defaultValue = "localhost")
     String speakerHost;
 
     @Inject
-    @ConfigProperty(name = "SPEAKER_SVC_SERVICE_PORT", defaultValue = "8080")
+    @ConfigProperty(name = "SPEAKER_SERVICE_PORT", defaultValue = "8080")
     String speakerPort;
 
     @Fallback(fallbackMethod = "getSpeakerFallback")
