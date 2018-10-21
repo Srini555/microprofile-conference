@@ -30,9 +30,9 @@ metadata:
   labels:
     app: conference-app
 spec:
-  type: NodePort #Exposes the service as a node port
+  type: LoadBalancer #Exposes the service
   ports:
-  - port: 8081
+  - port: 30001
     protocol: TCP
     targetPort: 8081
   selector:
