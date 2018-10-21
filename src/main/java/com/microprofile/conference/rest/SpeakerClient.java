@@ -2,11 +2,11 @@ package com.microprofile.conference.rest;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.client.ClientBuilder;
-import java.net.URI;
+import javax.ws.rs.core.Response;
 
 @ApplicationScoped
 public class SpeakerClient {
@@ -19,9 +19,14 @@ public class SpeakerClient {
     @ConfigProperty(name = "SPEAKER_SERVICE_PORT", defaultValue = "8080")
     String speakerPort;
 
+    @Inject
+    @RestClient
+    SpeakerRestClient speakerRestClient;
+
     @Fallback(fallbackMethod = "getSpeakerFallback")
-    public Speaker getSpeaker(Integer id) throws Exception {
-        return ClientBuilder.newClient().target(new URI("http://" + speakerHost + ":" + speakerPort + "/speakers/" + id)).request().get(Speaker.class);
+    public Speaker getSpeaker(Integer id) {
+        Response response = speakerRestClient.getById(id);
+        return response.readEntity(Speaker.class);
     }
 
     public Speaker getSpeakerFallback(Integer id) {
