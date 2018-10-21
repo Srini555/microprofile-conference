@@ -23,8 +23,6 @@ spec:
         env:
         - name: CONFERENCE_NAME
           value: Oracle Code One
-        - name: 'com.microprofile.conference.rest.SpeakerRestClient/mp-rest/url'
-          value: http://${SPEAKER_SERVICE_HOST}:${SPEAKER_SERVICE_PORT}
       imagePullSecrets:
       - name: wercker
 ---

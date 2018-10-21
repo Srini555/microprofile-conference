@@ -13,7 +13,7 @@ import java.util.List;
 public class SessionService {
 
     @Inject
-    SpeakerClient client;
+    SpeakerService client;
 
     @Inject
     @ConfigProperty(name = "CONFERENCE_NAME", defaultValue = "Oracle Code")
