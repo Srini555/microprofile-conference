@@ -21,12 +21,13 @@ public class SpeakerService {
     @ConfigProperty(name = "SPEAKER_SERVICE_PORT", defaultValue = "8080")
     String speakerPort;
 
-    @Timeout(10000)
+    @Timeout(1000)
     @Fallback(fallbackMethod = "getSpeakerFallback")
     public Speaker getSpeaker(Integer id) throws Exception {
         URL url = new URL("http://" + speakerHost + ":" + speakerPort);
         SpeakerClient speakerRestClient = RestClientBuilder.newBuilder()
                 .baseUrl(url)
+                .property("connectionTimeout", 10)
                 .build(SpeakerClient.class);
         Response response = speakerRestClient.getById(id);
         return response.readEntity(Speaker.class);
