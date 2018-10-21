@@ -1,5 +1,7 @@
 package com.microprofile.conference.rest;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,14 +15,18 @@ public class SessionService {
     @Inject
     SpeakerClient client;
 
+    @Inject
+    @ConfigProperty(name = "CONFERENCE_NAME", defaultValue = "Oracle Code")
+    String conference;
+
     List<Session> sessions;
 
     @PostConstruct
     public void init() {
         sessions = Arrays.asList(
-                new Session(1, "Turning Your Java EE App Cloud-Native", "Intermediatte", Arrays.asList(1)),
-                new Session(2, "Jakarta EE Meets NoSQL in the Cloud Age", "Intermediatte", Arrays.asList(3,5)),
-                new Session(3, "Containers for an Automated Pipeline: Risk or Opportunity", "Intermediatte", Arrays.asList(5))
+                new Session(1, "Turning Your Java EE App Cloud-Native", "Intermediatte", conference, Arrays.asList(1)),
+                new Session(2, "Jakarta EE Meets NoSQL in the Cloud Age", "Intermediatte", conference, Arrays.asList(3,5)),
+                new Session(3, "Containers for an Automated Pipeline: Risk or Opportunity", conference, "Intermediatte", Arrays.asList(5))
         );
     }
 

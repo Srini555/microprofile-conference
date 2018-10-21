@@ -22,11 +22,12 @@ public class Session {
     List<Speaker> speakers;
     List<Integer> speakerIds;
 
-    public Session(Integer id, String title, String level, List<Integer> speakerIds) {
+    public Session(Integer id, String title, String level, String conference, List<Integer> speakerIds) {
         super();
         this.id = id;
         this.title = title;
         this.level = level;
+        this.conference = conference;
         this.speakerIds = speakerIds;
     }
 
