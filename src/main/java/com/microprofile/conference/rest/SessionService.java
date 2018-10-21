@@ -17,7 +17,11 @@ public class SessionService {
 
     @PostConstruct
     public void init() {
-        sessions = Arrays.asList(new Session(1, "Cloud Native Java EE", "Intermediatte", Arrays.asList(1, 2)));
+        sessions = Arrays.asList(
+                new Session(1, "Turning Your Java EE App Cloud-Native", "Intermediatte", Arrays.asList(1)),
+                new Session(2, "Jakarta EE Meets NoSQL in the Cloud Age", "Intermediatte", Arrays.asList(3,5)),
+                new Session(3, "Containers for an Automated Pipeline: Risk or Opportunity", "Intermediatte", Arrays.asList(5))
+        );
     }
 
     public List<Session> getSessions() throws Exception {

@@ -32,7 +32,7 @@ metadata:
 spec:
   type: LoadBalancer #Exposes the service
   ports:
-  - port: 30001
+  - port: 8081
     protocol: TCP
     targetPort: 8081
   selector:
