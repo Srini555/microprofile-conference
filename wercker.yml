@@ -13,18 +13,19 @@ build:
       name: maven build
       code: mvn clean package
 
-#Push the docker image with our built and tested application to the Oracle Container Registry
+#Build and push the docker image with our built and tested application to the Oracle Container Registry
 push-release:
   steps:
+  - internal/docker-build:
+      dockerfile: Dockerfile
+      image-name: microprofile-conference
   - internal/docker-push:
       username: $DOCKER_USERNAME
       password: $DOCKER_PASSWORD
       repository: $DOCKER_REPO
       registry: $DOCKER_REGISTRY
-      tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
-      working-dir: /pipeline/source
-      ports: $PORT
-      cmd: sh target/bin/start
+      image-name: microprofile-conference
+      tag: latest
 
 #Deploy our container from the Oracle Container Registry to the Oracle Container Engine (Kubernetes)
 deploy-to-cluster:
@@ -32,17 +33,13 @@ deploy-to-cluster:
     id: alpine
     cmd: /bin/sh
   steps:
-
   - bash-template
-
   - script:
       name: "Visualise Kubernetes config"
       code: cat kubernetes.yml
-
   - kubectl:
       name: deploy to kubernetes
       server: $KUBERNETES_MASTER
-#      username: $KUBERNETES_USERNAME
       token: $KUBERNETES_TOKEN
       insecure-skip-tls-verify: true
       command: apply -f kubernetes.yml
